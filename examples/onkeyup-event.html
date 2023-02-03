@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" defer src="/libs/nav.js"></script>
+    <title>OnKeyUp Events</title>
+  </head>
+  <body>
+    <my-nav>OnKeyUp Events</my-nav>
+    <section>
+      <form>
+        <label for="search">search</label>
+        <input type="text" id="search" />
+      </form>
+
+      <ul></ul>
+    </section>
+
+    <script>
+      const searchInputEl = document.querySelector('#search');
+      const listContainerEl = document.querySelector('ul');
+
+      const listOfStrings = [
+        'Hello',
+        'World',
+        'This',
+        'Is',
+        'A',
+        'List',
+        'Of',
+        'Strings',
+      ];
+
+      createDOMList(listOfStrings);
+
+      searchInputEl.addEventListener('keyup', (event) => {
+        console.log('current input value >>>', event.target.value);
+        const newList = filterList(listOfStrings);
+        createDOMList(newList);
+      });
+
+      function createDOMList(list) {
+        listContainerEl.innerHTML = '';
+
+        list.forEach((item) => {
+          const listItemEl = `<li>${item}</li>`;
+          listContainerEl.innerHTML += listItemEl;
+
+          // const listItemEl = document.createElement("li");
+          // listItemEl.textContent = item;
+          // listContainerEl.appendChild(listItemEl);
+        });
+      }
+
+      function filterList(list) {
+        const searchInputValue = searchInputEl.value;
+        const filteredList = list.filter((item) => {
+          return item.toLowerCase().includes(searchInputValue.toLowerCase());
+        });
+
+        return filteredList;
+      }
+    </script>
+  </body>
+</html>
